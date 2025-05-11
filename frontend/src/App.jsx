@@ -1,56 +1,68 @@
-import { useState } from "react";
+// src/App.jsx
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import Topbar from "./Topbar";
+import Login from "./Login";
+import Register from "./Register";
+import Dashboard from "./Dashboard";
+import Profile from "./Profile";
+import Deploy from "./Deploy";
 
-function App() {
-  const [result, setResult] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const deploy = async (chain) => {
-    setLoading(true);
-    setResult("");
-
-    try {
-      const res = await fetch(`http://localhost:8000/deploy/${chain}`, {
-        method: "POST",
-      });
-      const data = await res.json();
-      if (data.address) {
-        setResult(`✅ Contract deployed on ${chain}: ${data.address}`);
-      } else {
-        setResult(`❌ Error: ${data.error}`);
-      }
-    } catch (err) {
-      setResult(`❌ Network error`);
-    } finally {
-      setLoading(false);
-    }
-  };
+function AnimatedRoutes() {
+  const location = useLocation();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md text-center">
-        <h1 className="text-2xl font-bold mb-6">Universal Smart Contract Deployer</h1>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route
+          path="/login"
+          element={<AnimatedPage><Login /></AnimatedPage>}
+        />
+        <Route
+          path="/register"
+          element={<AnimatedPage><Register /></AnimatedPage>}
+        />
+        <Route
+          path="/dashboard"
+          element={<AnimatedPage><Dashboard /></AnimatedPage>}
+        />
+        <Route
+          path="/profile"
+          element={<AnimatedPage><Profile /></AnimatedPage>}
+        />
+        <Route
+          path="/deploy"
+          element={<AnimatedPage><Deploy /></AnimatedPage>}
+        />
+        <Route
+          path="/"
+          element={<AnimatedPage><Dashboard /></AnimatedPage>}
+        />
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
-        <div className="space-y-4">
-          <button
-            className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition"
-            onClick={() => deploy("ethereum")}
-            disabled={loading}
-          >
-            🚀 Deploy to Ethereum
-          </button>
-          <button
-            className="w-full bg-purple-600 text-white py-3 rounded-xl hover:bg-purple-700 transition"
-            onClick={() => deploy("polygon")}
-            disabled={loading}
-          >
-            🌐 Deploy to Polygon
-          </button>
-        </div>
+function AnimatedPage({ children }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
+      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+      exit={{ opacity: 0, scale: 0.9, rotate: 5 }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
-        {loading && <p className="mt-6 text-sm text-gray-500">Deploying contract...</p>}
-        {result && <p className="mt-4 text-green-600 font-mono">{result}</p>}
-      </div>
-    </div>
+function App() {
+  return (
+    <Router>
+      <Topbar />
+      <AnimatedRoutes />
+    </Router>
   );
 }
 

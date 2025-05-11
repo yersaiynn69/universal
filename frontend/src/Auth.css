@@ -1,0 +1,77 @@
+/* src/Auth.css */
+
+/* Topbar Style (Binance Style) */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background-color: #1e1e2d;
+  color: #f0b90b;
+  align-items: center;
+}
+
+.topbar a {
+  color: #f0b90b;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.logout-button {
+  background-color: #f0b90b;
+  color: #ffffff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #d6a108;
+}
+
+/* Dashboard Style */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #121212;
+  min-height: 100vh;
+  color: #ffffff;
+  padding-top: 20px;
+}
+
+.dashboard-content {
+  max-width: 600px;
+  background: #1e1e2d;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.balance-card {
+  background: #2a2a40;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.dashboard-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.dashboard-btn {
+  background-color: #f0b90b;
+  color: #ffffff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dashboard-btn:hover {
+  background-color: #d6a108;
+}
